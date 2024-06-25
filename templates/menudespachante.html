@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Trabajo Practico Final POO</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/menudespachante.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/flash.css') }}">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(function() {
+                let alerts = document.querySelectorAll(".alert");
+                alerts.forEach(alert => alert.style.display = 'none');
+            }, 3000);
+        });
+    </script>
+</head>
+<body>
+    <div id="contenedor">
+        <div id="central">
+            <div id="login">
+                <div class="titulo">
+                    Bienvenido
+                </div>
+                <!-- Mensajes flash -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        <div class="flash-messages">
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }}">{{ message }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+                <div class="container">
+                    <div class="image-container">
+                        <img src="{{ url_for('static', filename='img/despachante.jpeg') }}" alt="Imagen Principal" class="side-image">
+                    </div>
+                    <div class="form-container">
+                        <form method="post" action="{{ url_for('menuregistrarpaquete.registro') }}">
+                            <input type="hidden" name="sucursal" value="{{ sucursal }}">
+                            <button type="submit">Registrar paquete</button>
+                        </form>
+                        <form method="get" action="{{ url_for('salidatransporte.transporte') }}">
+                            <input type="hidden" name="sucursal" value="{{ sucursal }}">
+                            <button type="submit">Salida de transporte</button>
+                        </form>
+                        
+                        <form method="get" action="{{ url_for('llegada.llegadapaquete') }}">
+                            <input type="hidden" name="sucursal" value="{{ sucursal }}">
+                            <button type="submit">Llegada de Transporte</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

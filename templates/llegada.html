@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Transporte</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/llegada.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/flash.css') }}">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(function() {
+                let alerts = document.querySelectorAll(".alert");
+                alerts.forEach(alert => alert.style.display = 'none');
+            }, 3000);
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="image-container">
+            <img src="{{ url_for('static', filename='img/transporte.jpeg') }}" alt="Transporte" class="side-image">
+        </div>
+        <div class="form-container">
+            <!-- Mensajes flash -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+            <h1 class="titulo">Transportes:</h1>
+            <form action="{{ url_for('llegada.llegadapaquete') }}" method="post">
+                <input type="hidden" name="misucursal" value="{{ id }}">
+                <label for="transportes">Seleccionar Transportes:</label>
+                <div class="transportes-select-container">
+                    {% for transporte in lista %}
+                        <div class="transporte-option">
+                            <input type="checkbox" name="transportes" value="{{ transporte.id }}" id="transporte-{{ transporte.id }}">
+                            <label for="transporte-{{ transporte.id }}">
+                                <img src="{{ url_for('static', filename='img/camion.jpeg') }}" alt="Paquete Icono">
+                                {{ transporte.numerotransporte }} - {{ transporte.fechahorasalida.strftime('%Y-%m-%d %H:%M:%S') }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+                <button type="submit">Registrar Llegada</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

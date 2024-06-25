@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Transporte</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/paquetes.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/flash.css') }}">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(function() {
+                let alerts = document.querySelectorAll(".alert");
+                alerts.forEach(alert => alert.style.display = 'none');
+            }, 3000);
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="image-container">
+            <img src="{{ url_for('static', filename='img/transporte.jpeg') }}" alt="Transporte" class="side-image">
+        </div>
+        <div class="form-container">
+            <!-- Mensajes flash -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+            <h1 class="titulo">Transportando a la sucursal ID: {{ idsucursal }}</h1>
+            <form action="{{ url_for('registrotransporte.registrartransportep') }}" method="post">
+                <input type="hidden" name="sucursal_id" value="{{ idsucursal }}">
+                <input type="hidden" name="misucursal" value="{{ misucursal }}">
+                <label for="paquetes">Seleccionar Paquetes:</label>
+                <div class="paquete-select-container">
+                    {% for paquete in paquetes %}
+                        <div class="paquete-option">
+                            <input type="checkbox" name="paquetes" value="{{ paquete.id }}" id="paquete-{{ paquete.id }}">
+                            <label for="paquete-{{ paquete.id }}">
+                                <img src="{{ url_for('static', filename='img/paquete.jpeg') }}" alt="Paquete Icono">
+                                {{ paquete.numeroenvio }} - {{ paquete.dirdestinatario }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+                <button type="submit">Registrar Transporte</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

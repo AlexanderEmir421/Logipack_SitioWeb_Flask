@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Sucursales</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sucursales.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de Sucursales</h1>
+        <img src="{{ url_for('static', filename='img/sucursal.jpeg') }}" alt="Imagen Principal" class="imagen-central">
+        <form action="{{ url_for('despachante.bienvenido') }}" method="post">
+            <label for="sucursal">Seleccione Sucursal:</label>
+            <select name="sucursal" id="sucursal">
+                {% for sucursal in lista %}
+                    <option value="{{ sucursal.id }}">{{ sucursal.numero }} - {{ sucursal.localidad }} - {{ sucursal.direccion }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Ir</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>LOGIPACK</title>    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/acceso.css') }}">
+</head>
+<body>
+    <div id="contenedor">
+        <div id="central">
+            <div id="login">
+                <div class="titulo">
+                    LOGIPACK
+                </div>
+                <img src="{{ url_for('static', filename='img/acceso.jpeg') }}" alt="Imagen Principal" class="imagen-central">
+                <div class="titulo">
+                    Acceder Como:
+                </div>
+                <button onclick="location.href='{{ url_for('sucursales.sucursales') }}'">Despachante</button>
+            </div>
+        </div>
+    </div>     
+</body>
+</html>

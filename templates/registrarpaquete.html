@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Registrar Paquete</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/flash.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/registropaquete.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="image-container">
+            <img src="{{ url_for('static', filename='img/paqueter.jpeg') }}" alt="Registrar Paquete" class="side-image">
+        </div>
+        <div class="form-container">
+            <h1>Registrar Paquete en la sucursal número: {{ sucursal.numero }}</h1>
+            <!-- Mensajes flash -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            <form action="{{ url_for('registrarpaquete.registro') }}" method="post">
+                <input type="hidden" name="sucursal_id" value="{{ sucursal.id }}">
+                
+                <label for="peso">Peso del paquete:</label>
+                <input type="text" name="peso" id="peso" required>
+                
+                <label for="nombre">Nombre del destinatario:</label>
+                <input type="text" name="nombre" id="nombre" required>
+                
+                <label for="direccion">Dirección del destinatario:</label>
+                <input type="text" name="direccion" id="direccion" required>
+                
+                <button type="submit">Registrar Paquete</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
